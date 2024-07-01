@@ -1,0 +1,8 @@
+<web-app>
+    <display-name>Meubel Review</display-name>
+
+    <listener>
+        <listener-class>nl.meubelreview.com.setup.AppInitializer</listener-class>
+    </listener>
+
+</web-app>

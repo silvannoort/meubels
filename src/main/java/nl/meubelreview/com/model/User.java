@@ -1,15 +1,23 @@
 package nl.meubelreview.com.model;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Principal {
     private Long id;
     private String username;
     private String password;
     private String email;
     private String profilePicture;
-    private List<Review> reviews;
-    private List<Reactie> reacties;
+    private String role;
+    private List<Review> reviews = new ArrayList<>();
+    private List<Reactie> reacties = new ArrayList<>();
+
+    @Override
+    public String getName() {
+        return this.username;
+    }
 
 
 
@@ -53,6 +61,14 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public List<Review> getReviews() {
         return reviews;
     }
@@ -61,11 +77,11 @@ public class User {
         this.reviews = reviews;
     }
 
-    public List<Reactie> getComments() {
+    public List<Reactie> getReacties() {
         return reacties;
     }
 
-    public void setComments(List<Reactie> comments) {
+    public void setReacties(List<Reactie> reacties) {
         this.reacties = reacties;
     }
 }

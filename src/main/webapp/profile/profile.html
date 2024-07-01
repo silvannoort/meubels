@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profiel</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="../image/logo.png" type="image/png">
+</head>
+<body>
+<div class="navbar">
+    <h1>Mijn Profiel</h1>
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="profile.html" id="profileLink" style="display: none;">Profiel</a>
+        <a href="../register/register.html" id="registerLink" style="display: none;">Registreren</a>
+        <a href="../reactie/reactie.html" id="reactieLink" style="display: none;">Plaats een Reactie</a>
+        <a href="../review/review.html" id="reviewLink" style="display: none;">Bekijk Reacties</a>
+    </nav>
+</div>
+<div class="container">
+    <div class="profile-info">
+        <img id="profilePicture" src="" alt="Profielfoto">
+        <h2 id="username"></h2>
+        <p id="email"></p>
+    </div>
+    <div class="reviews-section">
+        <h2>Mijn Reviews en Reacties</h2>
+        <ul id="reviewsList"></ul>
+    </div>
+
+</div>
+
+<script src="profile.js" type="module"></script>
+</body>
+</html>

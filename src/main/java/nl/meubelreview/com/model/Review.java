@@ -1,26 +1,30 @@
 package nl.meubelreview.com.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Review {
     private Long id;
     private String productName;
-    private Integer rating;
+    private int rating;
     private String reviewText;
     private LocalDateTime createdDate;
     private Long userId;
     private List<Reactie> reacties;
 
-    public Review() {}
+    public Review() {
+        this.reacties = new ArrayList<>();
+    }
 
-    public Review(Long id, String productName, Integer rating, String reviewText, LocalDateTime createdDate, Long userId) {
+    public Review(Long id, String productName, int rating, String reviewText, LocalDateTime createdDate, Long userId) {
         this.id = id;
         this.productName = productName;
         this.rating = rating;
         this.reviewText = reviewText;
         this.createdDate = createdDate;
         this.userId = userId;
+        this.reacties = new ArrayList<>();
     }
 
 
@@ -40,11 +44,11 @@ public class Review {
         this.productName = productName;
     }
 
-    public Integer getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
@@ -72,11 +76,11 @@ public class Review {
         this.userId = userId;
     }
 
-    public List<Reactie> getComments() {
+    public List<Reactie> getReacties() {
         return reacties;
     }
 
-    public void setComments(List<Reactie> comments) {
+    public void setReacties(List<Reactie> reacties) {
         this.reacties = reacties;
     }
 }

@@ -1,56 +1,127 @@
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+import LoginService from './login/login-service.js';
 
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+const loginService = new LoginService();
 
-    const loginData = {
-        username: username,
-        password: password
-    };
+document.addEventListener('DOMContentLoaded', async () => {
+    document.forms.loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = e.target.username.value;
+        const password = e.target.password.value;
+        console.log("Attempting login with username:", username, "and password:", password);
+        try {
+            await loginService.login(username, password);
+            console.log("Login successful");
+            alert('Login successful!');
+            window.location.reload();
+        } catch (error) {
+            console.error("Login failed:", error);
+            alert('Login failed: ' + error.message);
+        }
+    });
 
-    fetch('http://localhost:8080/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(loginData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            if(data.success) {
-                alert('Login successful!');
+    document.forms.logoutForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        loginService.logout();
+        console.log("Logout successful");
+        alert('Logged out!');
+        window.location.reload();
+    });
+
+    console.log("DOMContentLoaded event fired");
+    const userSpan = document.getElementById('user');
+    const profileLink = document.getElementById('profileLink');
+    const registerLink = document.getElementById('registerLink');
+    const reactieLink = document.getElementById('reactieLink');
+    const reviewLink = document.getElementById('reviewLink');
+    const adminLink = document.getElementById('adminLink'); // Get the admin link
+    const searchSection = document.getElementById('searchSection');
+    const loginHeader = document.getElementById('loginHeader');
+
+    const loggedIn = loginService.isLoggedIn();
+    console.log("Is user logged in?", loggedIn);
+    if (loggedIn) {
+        const user = await loginService.getUser();
+        if (user) {
+            console.log("User info:", user);
+            userSpan.textContent = `Ingelogd als: ${user.username}`;
+            document.forms.loginForm.style.display = 'none';
+            document.forms.logoutForm.style.display = 'block';
+            loginHeader.textContent = 'Uitloggen';
+            profileLink.style.display = 'inline';
+            registerLink.style.display = 'none';
+            reactieLink.style.display = 'inline';
+            reviewLink.style.display = 'inline';
+            searchSection.style.display = 'block';
+
+            if (user.role === 'admin') {
+                adminLink.style.display = 'inline';
             } else {
-                alert('Login failed!');
+                adminLink.style.display = 'none';
             }
-        })
-        .catch(error => console.error('Error:', error));
-});
+        } else {
+            console.log("No valid user found");
+            document.forms.loginForm.style.display = 'block';
+            document.forms.logoutForm.style.display = 'none';
+            loginHeader.textContent = 'Inloggen';
+            profileLink.style.display = 'none';
+            registerLink.style.display = 'inline';
+            reactieLink.style.display = 'none';
+            reviewLink.style.display = 'none';
+            searchSection.style.display = 'none';
+            adminLink.style.display = 'none'; // Hide the admin link
+        }
+    } else {
+        console.log("User is not logged in");
+        document.forms.loginForm.style.display = 'block';
+        document.forms.logoutForm.style.display = 'none';
+        loginHeader.textContent = 'Inloggen';
+        profileLink.style.display = 'none';
+        registerLink.style.display = 'inline';
+        reactieLink.style.display = 'none';
+        reviewLink.style.display = 'none';
+        searchSection.style.display = 'none';
+        adminLink.style.display = 'none'; // Hide the admin link
+    }
 
-document.getElementById('reviewForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+    document.forms.searchForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const searchTerm = e.target.searchTerm.value;
+        try {
+            const response = await fetch(`/restservices/reviews/search?productName=${searchTerm}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                const reviews = await response.json();
+                displaySearchResults(reviews);
+            } else {
+                console.error('Search failed:', response.status);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
 
-    const productName = document.getElementById('productName').value;
-    const rating = document.getElementById('rating').value;
-    const reviewText = document.getElementById('reviewText').value;
-
-    const review = {
-        productName: productName,
-        rating: rating,
-        reviewText: reviewText
-    };
-
-    fetch('http://localhost:8080/api/reviews', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(review)
-    })
-        .then(response => response.json())
-        .then(data => {
-            alert('Review submitted successfully!');
-            document.getElementById('reviewForm').reset();
-        })
-        .catch(error => console.error('Error:', error));
+    function displaySearchResults(reviews) {
+        const resultsDiv = document.getElementById('searchResults');
+        resultsDiv.innerHTML = '';
+        if (reviews.length === 0) {
+            resultsDiv.textContent = 'Geen reviews gevonden.';
+        } else {
+            reviews.forEach(review => {
+                const reviewDiv = document.createElement('div');
+                reviewDiv.classList.add('review');
+                reviewDiv.innerHTML = `
+                    <h3>${review.productName}</h3>
+                    <p>Rating: ${review.rating}</p>
+                    <p>${review.reviewText}</p>
+                    <p><small>Geplaatst op: ${new Date(review.createdDate).toLocaleDateString()}</small></p>
+                    <button onclick="window.location.href='reactie/reactie.html?reviewId=${review.id}'">Bekijk en Plaats Reactie</button>
+                `;
+                resultsDiv.appendChild(reviewDiv);
+            });
+        }
+    }
 });

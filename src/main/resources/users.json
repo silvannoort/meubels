@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "username": "user1",
+    "password": "password1",
+    "email": "user1@example.com",
+    "profilePicture": "image/cat.png",
+    "role": "user",
+    "reviews": [],
+    "reacties": []
+  },
+  {
+    "id": 2,
+    "username": "admin",
+    "password": "adminpass",
+    "email": "admin@example.com",
+    "profilePicture": "image/margot.jpg",
+    "role": "admin",
+    "reviews": [],
+    "reacties": []
+  }
+]
+

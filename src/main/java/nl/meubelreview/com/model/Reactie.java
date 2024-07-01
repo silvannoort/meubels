@@ -1,17 +1,15 @@
 package nl.meubelreview.com.model;
-import java.time.LocalDateTime;
 
 import java.time.LocalDateTime;
 
 public class Reactie {
     private Long id;
-    private String commentText;
+    private String reactieText;
     private LocalDateTime createdDate;
     private Long userId;
     private Long reviewId;
 
-
-
+   
     public Long getId() {
         return id;
     }
@@ -20,12 +18,12 @@ public class Reactie {
         this.id = id;
     }
 
-    public String getCommentText() {
-        return commentText;
+    public String getReactieText() {
+        return reactieText;
     }
 
-    public void setCommentText(String commentText) {
-        this.commentText = commentText;
+    public void setReactieText(String reactieText) {
+        this.reactieText = reactieText;
     }
 
     public LocalDateTime getCreatedDate() {
@@ -52,4 +50,3 @@ public class Reactie {
         this.reviewId = reviewId;
     }
 }
-

@@ -6,25 +6,43 @@
     <title>Online Meubelen Reviews Forum</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="image/logo.png" type="image/png">
 </head>
 <body>
 <div class="navbar">
-    <h1>Meubel Reviews</h1>
+    <h1>MeubelMening</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="profile/profile.html" id="profileLink" style="display: none;">Profiel</a>
+        <a href="register/register.html" id="registerLink" style="display: none;">Registreren</a>
+        <a href="reactie/reactie.html" id="reactieLink" style="display: none;">Plaats een Reactie</a>
+        <a href="review/review_form.html" id="reviewLink" style="display: none;">Plaats een review</a>
+        <a href="admin/admin.html" id="adminLink" style="display: none;">Admin</a> <!-- New admin link -->
+    </nav>
 </div>
 <div class="container">
-    <div class="info">
+    <div class="info" id="infoSection">
         <h2>Welkom bij het Online Meubelen Reviews Forum</h2>
         <p>Op onze site kunt u beoordelingen en meningen over verschillende meubels delen. Dit platform is speciaal ontworpen om gebruikers te helpen betrouwbare en gedetailleerde beoordelingen van meubels te vinden en te delen.</p>
-        <p>Functies:</p>
+        <p>Begin:</p>
         <ul>
-            <li>Gebruikers kunnen accounts aanmaken en inloggen.</li>
-            <li>Gebruikers kunnen reviews plaatsen en op reviews reageren.</li>
-            <li>Zoekfunctionaliteit voor het vinden van specifieke reviews.</li>
-            <li>Gebruikersprofielen waar ze hun reviews en reacties kunnen zien.</li>
+            <li>Maak een account aan!</li>
+            <li>Zoek naar een review!</li>
+            <li>Bekijk en reageer op de review, en plaats uw eigen review.</li>
+            <li>Bekijk al uw activiteit op uw gebruikerspagina.</li>
         </ul>
     </div>
+    <div id="searchSection" style="display: none;">
+        <h2>Zoeken naar reviews</h2>
+        <form id="searchForm">
+            <label for="searchTerm">Productnaam:</label>
+            <input type="text" id="searchTerm" name="searchTerm" required>
+            <button type="submit">Zoeken</button>
+        </form>
+        <div id="searchResults"></div>
+    </div>
     <div class="login-form">
-        <h2>Inloggen</h2>
+        <h2 id="loginHeader">Inloggen</h2>
         <form id="loginForm">
             <label for="username">Gebruikersnaam:</label>
             <input type="text" id="username" name="username" required>
@@ -34,9 +52,13 @@
 
             <button type="submit">Login</button>
         </form>
+        <form id="logoutForm" style="display: none;">
+            <button type="submit">Logout</button>
+        </form>
+        <span id="user"></span>
     </div>
 </div>
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>
